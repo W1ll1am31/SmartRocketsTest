@@ -1,7 +1,6 @@
 package testing.genetic.models;
 
 import lombok.Data;
-import processing.core.PVector;
 
 import javax.persistence.Id;
 import java.util.List;
@@ -11,5 +10,5 @@ import java.util.List;
 public class RocketPosition {
     @Id
     public String uuid;
-    public List<List<List<PVector>>> allRocketPositions;
+    public List<List<List<RequiredInfo>>> allRocketPositions;
 }

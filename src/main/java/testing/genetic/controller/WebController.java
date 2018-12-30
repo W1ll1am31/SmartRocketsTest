@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import processing.core.PVector;
+import testing.genetic.models.RequiredInfo;
 import testing.genetic.models.Rocket;
 import testing.genetic.models.RocketPosition;
 import testing.genetic.service.GeneticAlgorithm;
@@ -29,7 +29,7 @@ public class WebController {
     }
 
     @GetMapping(value = "/test")
-    ResponseEntity<List<PVector>> testMovement() {
+    ResponseEntity<List<RequiredInfo>> testMovement() {
         Rocket rocket = new Rocket(5);
         return ResponseEntity.ok(rocket.fly());
     }

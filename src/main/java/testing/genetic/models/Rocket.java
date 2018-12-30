@@ -4,7 +4,6 @@ import lombok.Data;
 import processing.core.PVector;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -17,7 +16,7 @@ public class Rocket {
     private int lifespan;
 
     public Rocket() {
-        this.position = new PVector();
+        this.position = new PVector(400, 400);
         this.velocity = new PVector();
         this.acceleration = new PVector();
         this.fitness = 0;
@@ -45,12 +44,12 @@ public class Rocket {
         this.acceleration.mult(0);
     }
 
-    public List<PVector> fly() {
-        List<PVector> positionList = new ArrayList<>();
+    public List<RequiredInfo> fly() {
+        List<RequiredInfo> positionList = new ArrayList<>();
         for(PVector gene : this.dna.getGenes()) {
             this.applyForce(gene);
             this.update();
-            positionList.add(this.position.copy());
+            positionList.add(new RequiredInfo(this.position.x, this.position.y, this.velocity.heading()));
         }
         this.fitness = calculateFitness();
         return positionList;

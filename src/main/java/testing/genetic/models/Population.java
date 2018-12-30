@@ -2,7 +2,6 @@ package testing.genetic.models;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import processing.core.PVector;
 import testing.genetic.repository.RocketDataRepository;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class Population {
         RocketPosition allRocketsPositions = new RocketPosition();
         allRocketsPositions.setAllRocketPositions(new ArrayList<>());
         for(int generation = 0; generation < this.generationSize; generation++) {
-            List<List<PVector>> thisGenerationsPositions = new ArrayList<>();
+            List<List<RequiredInfo>> thisGenerationsPositions = new ArrayList<>();
             for(Rocket rocket : this.rockets) {
                 thisGenerationsPositions.add(rocket.fly());
             }

@@ -18,9 +18,13 @@ public class DNA {
     }
 
     public DNA(DNA dna1, DNA dna2) {
+        this.genes = mergeDNA(dna1, dna2);
+    }
+
+    private List<PVector> mergeDNA(DNA dna1, DNA dna2) {
         int lifespan = dna1.getGenes().size();
         List<PVector> newGenes = new ArrayList<>(dna1.getGenes().subList(0, lifespan / 2));
-        newGenes.addAll(dna2.getGenes().subList((lifespan/2) + 1, lifespan));
-        this.genes = newGenes;
+        newGenes.addAll(dna2.getGenes().subList((lifespan/2), lifespan));
+        return newGenes;
     }
 }
