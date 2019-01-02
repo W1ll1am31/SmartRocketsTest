@@ -12,8 +12,8 @@ public class GeneticAlgorithm {
 //    @Autowired
 //    RocketDataRepository rocketDataRepository;
 
-    public RocketPosition run(String uuid) {
-        Population population = new Population(5, 10, 200);
+    public RocketPosition run(String uuid, int populationCount, int genCount, int lifespan) {
+        Population population = new Population(populationCount, genCount, lifespan);
         return population.run();
 //        rocketDataRepository.saveAndFlush(rocketPosition);
     }

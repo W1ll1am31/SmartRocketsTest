@@ -13,19 +13,15 @@ import java.util.Random;
 public class Population {
     private List<Rocket> rockets;
     private int populationSize;
-    private int generationSize;
+    private int numberOfGenerations;
     private int lifespan;
 
     @Autowired
     RocketDataRepository repository;
 
-    public Population() {
-        this(20, 50, 100);
-    }
-
-    public Population(int populationSize, int generationSize, int lifespan) {
+    public Population(int populationSize, int numberOfGenerations, int lifespan) {
         this.populationSize = populationSize;
-        this.generationSize = generationSize;
+        this.numberOfGenerations = numberOfGenerations;
         this.lifespan = lifespan;
         this.rockets = new ArrayList<>();
 
@@ -37,7 +33,7 @@ public class Population {
     public RocketPosition run() {
         RocketPosition allRocketsPositions = new RocketPosition();
         allRocketsPositions.setAllRocketPositions(new ArrayList<>());
-        for(int generation = 0; generation < this.generationSize; generation++) {
+        for(int generation = 0; generation < this.numberOfGenerations; generation++) {
             List<List<RequiredInfo>> thisGenerationsPositions = new ArrayList<>();
             for(Rocket rocket : this.rockets) {
                 thisGenerationsPositions.add(rocket.fly());
@@ -50,17 +46,27 @@ public class Population {
 
     private void evolve() {
         List<DNA> matingPool = new ArrayList<>();
+        Rocket bestRocket = new Rocket();
         for(Rocket rocket : this.rockets) {
+            if(rocket.getFitness() > bestRocket.getFitness()) {
+                bestRocket.setDna(rocket.getDna());
+                bestRocket.setFitness(rocket.getFitness());
+                System.out.println("New best rocket with fitness: " + bestRocket.getFitness());
+            }
             matingPool.addAll(Collections.nCopies(rocket.getFitness(), rocket.getDna()));
         }
         Random random = new Random();
         this.rockets.clear();
-        for(int dnaIndex = 0; dnaIndex < this.populationSize; dnaIndex++) {
+        for(int dnaIndex = 0; dnaIndex < this.populationSize-1; dnaIndex++) {
             DNA dna1 = matingPool.get(random.nextInt(matingPool.size()));
             DNA dna2 = matingPool.get(random.nextInt(matingPool.size()));
             DNA newDna = new DNA(dna1, dna2);
             this.rockets.add(new Rocket(newDna));
         }
 
+        for(Rocket rocket : this.rockets) {
+            rocket.mutate();
+        }
+        this.rockets.add(bestRocket);
     }
 }

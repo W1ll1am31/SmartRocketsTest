@@ -1,43 +1,39 @@
 const Http = new XMLHttpRequest();
 let positionData;
 let runAlgo = false;
-let generationCount = 10;
+let generationCount = 20;
 let currentGeneration = 0;
-let lifespan = 200;
+let lifespan = 100;
 let currentLife = 0;
+var genSlider;
+var lifeSlider;
+var popSlider;
 
 function setup() {
     createCanvas(800, 800);
-    let url = "/start";
-    Http.open("GET", url);
-    Http.send();
-    Http.onreadystatechange=(e)=> {
-        let response = JSON.parse(Http.responseText)
-        this.positionData = response.allRocketPositions;
-
-        this.runAlgo = true;
-    }
+    genSlider = createSlider(1, 50, 5);
+    lifeSlider = createSlider(10, 500, 250);
+    popSlider = createSlider(1, 50, 10);
 }
 
 function draw() {
     background(0);
-    if(this.runAlgo) {
-        for(let rocket of this.positionData) {
-            show(rocket[currentGeneration][currentLife])
+    if(runAlgo) {
+        for(let rocket of positionData[currentGeneration]) {
+            show(rocket[currentLife])
         }
         currentLife++;
         if(currentLife >= lifespan) {
-            console.log("Finished for this generation")
             currentLife = 0;
             currentGeneration++;
         }
-
         if(currentGeneration >= generationCount) {
-            console.log("Finshed all generations")
             currentGeneration = 0;
-            this.runAlgo = false
+            runAlgo = false
         }
     }
+    fill(255)
+    ellipse(400, 50, 20, 20);
 }
 
 function show(rocket) {
@@ -55,3 +51,18 @@ function show(rocket) {
     rect(0, 0, 25, 5);
     pop();
   }
+
+function runTest() {
+    generationCount = genSlider.value();
+    lifespan = lifeSlider.value();
+    let popCount = popSlider.value();
+    let url = "/start?genCount=" + generationCount + "&populationCount=" + popCount + "&lifespan=" + lifespan;
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange=(e)=> {
+        console.log(Http);
+        let response = JSON.parse(Http.responseText)
+        positionData = response.allRocketPositions;
+        runAlgo = true;
+    }
+}

@@ -5,6 +5,7 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Data
 public class DNA {
@@ -25,6 +26,11 @@ public class DNA {
         int lifespan = dna1.getGenes().size();
         List<PVector> newGenes = new ArrayList<>(dna1.getGenes().subList(0, lifespan / 2));
         newGenes.addAll(dna2.getGenes().subList((lifespan/2), lifespan));
-        return newGenes;
+
+        Random rand = new Random();
+        int midPoint = rand.nextInt(dna1.getGenes().size());
+        List<PVector> newGenes2 = new ArrayList<>(dna1.getGenes().subList(0, midPoint));
+        newGenes2.addAll(dna2.getGenes().subList(midPoint, dna2.getGenes().size()));
+        return newGenes2;
     }
 }

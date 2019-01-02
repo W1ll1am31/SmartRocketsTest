@@ -1,0 +1,16 @@
+improve fitness calculation
+    absolute or relative fitness
+    efficiency
+
+improve dna crossover
+    first half from one second half from the other
+    each gene has a 50/50 chance to come from either parent
+
+implement random mutations
+    every single thing has a chance to change slightly
+    or should each rocket have a chance to mutate and if so:
+        pick a random start pos in DNA
+        from that point to the end change each one slightly
+
+Add obstacle
+Possibly change walls so out one side and back in the other
