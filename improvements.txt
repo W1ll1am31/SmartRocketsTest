@@ -14,3 +14,7 @@ implement random mutations
 
 Add obstacle
 Possibly change walls so out one side and back in the other
+
+
+BUGS!!!!!!
+sometimes the returned list of positions is too short, maybe from hitting target or walls?
