@@ -4,9 +4,9 @@
     <v-container>
       <div ref="canvas"></div>
       <v-btn @click="runTest">Run Test</v-btn>
-      <v-slider v-model="generationCount" thumb-label="always" max="30"></v-slider>
-      <v-slider v-model="lifespan" thumb-label="always" max="1000"></v-slider>
-      <v-slider v-model="popCount" thumb-label="always" max="50"></v-slider>
+      <v-slider v-model="generationCount" thumb-label="always" max="50" label="Generation Count"></v-slider>
+      <v-slider v-model="lifespan" thumb-label="always" max="1000" label="Life span"></v-slider>
+      <v-slider v-model="popCount" thumb-label="always" max="1000" label="Population Size"></v-slider>
     </v-container>
   </div>
 </template>
@@ -42,6 +42,11 @@ export default {
       // eslint-disable-next-line
       p.draw = _ => {
         p.background(0);
+        p.fill(255);
+        p.ellipse(400, 50, 20, 20);
+        p.noFill();
+        p.stroke(255)
+        p.rect(300, 350, 200, 100);
         if (this.runAlgorithm) {
           for (let rocket of this.positionData[this.currentGeneration]) {
             this.show(rocket[this.currentLife]);
@@ -56,11 +61,6 @@ export default {
             this.runAlgorithm = false;
           }
         }
-        p.fill(255);
-        p.ellipse(400, 50, 20, 20);
-        p.noFill();
-        p.stroke(255)
-        p.rect(300, 350, 200, 100);
       };
     };
     const P5 = require("p5");
@@ -88,9 +88,9 @@ export default {
       //rotatates to the angle the rocket is pointing
       this.ps.rotate(rocket.heading);
       //creates a rectangle shape for rocket
-      //    rectMode(CENTER);
-      //    rect(0, 0, 25, 5);
-      this.ps.ellipse(0, 0, 5, 5);
+         this.ps.rectMode(this.ps.CENTER);
+         this.ps.rect(0, 0, 25, 5);
+      // this.ps.ellipse(0, 0, 5, 5);
       this.ps.pop();
     },
     runTest: function() {

@@ -116,22 +116,23 @@ public class Rocket {
     public void mutate() {
         Random rand = new Random();
         boolean shouldMutate = rand.nextBoolean();
+        List<PVector> newGenes = new ArrayList<>();
         if(shouldMutate) {
             for(PVector gene : this.getDna().getGenes()) {
                 if(rand.nextInt(100) <= 5) {
                     gene = PVector.random2D();
+                    System.err.println("Changing Gene");
                 }
+                newGenes.add(gene);
             }
+            this.getDna().setGenes(newGenes);
         }
     }
 
     private boolean hitsObstacle(Obstacle obstacle) {
-        if((this.position.x >= obstacle.getX()) &&
+        return (this.position.x >= obstacle.getX()) &&
                 (this.position.x <= (obstacle.getX() + obstacle.getWidth())) &&
                 (this.position.y >= obstacle.getY()) &&
-                (this.position.y <= obstacle.getY() + obstacle.getHeight())) {
-            return true;
-        }
-        return false;
+                (this.position.y <= obstacle.getY() + obstacle.getHeight());
     }
 }
